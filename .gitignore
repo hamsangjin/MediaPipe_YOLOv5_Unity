@@ -1,0 +1,10 @@
+Library/
+ProjectSettings/
+UserSettings/
+My_project.sln
+Logs/
+.git/
+obj/
+.vs/
+Assets/UnityChan/
+Assets/unity-chan!/
