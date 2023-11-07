@@ -49,7 +49,7 @@ public class DataReceiver : MonoBehaviour
     NetworkStream stream;
     TcpClient client;
     string dataReceived;
-    public DataList m_dataList = new DataList();
+    private DataList m_dataList = new DataList();
 
     [Range(1, 20)]
     public float resize_z = 15;
@@ -126,6 +126,11 @@ public class DataReceiver : MonoBehaviour
             }
 
         }
+    }
+
+    public int getDataLength()
+    {
+        return m_dataList.data.GetLength(0);
     }
 
     public Vector3[] getPose(int idx)

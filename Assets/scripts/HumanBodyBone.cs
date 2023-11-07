@@ -38,6 +38,8 @@ public class HumanBodyBone : MonoBehaviour
     // 모든 Update함수가 호출된 뒤 호출
     void LateUpdate()
     {
+        if (ID >= DataReceiver.Instance.getDataLength())
+            return;
         pose = new List<Vector3>(DataReceiver.Instance.getPose(ID));
         left = new List<Vector3>(DataReceiver.Instance.getLeft(ID));
         right = new List<Vector3>(DataReceiver.Instance.getRight(ID));
@@ -47,15 +49,19 @@ public class HumanBodyBone : MonoBehaviour
 
     private void SetBoneTransform()
     {
-        SetShoulder();
-        SetArm();
-        setHead();
+        if (pose.Count == 33)
+        {
+            SetShoulder();
+            SetArm();
+            setHead();
 
-        SetHip();
-        SetLeg();
-        SetFoot();
+            SetHip();
+            SetLeg();
+            //SetFoot();
 
-        SetHand();
+        }
+        SetHand(); 
+
     }
 
 #region UpperBoddy
@@ -137,20 +143,20 @@ public class HumanBodyBone : MonoBehaviour
 
     private void SetHand() 
     {
-        SetLeftHand();
-        SetRightHand();
+        if (right.Count == 21)
+            SetLeftHand();
+
+        if (left.Count == 21) // 왼손이 오른손을 렌더링해서 그럼
+            SetRightHand();
     }
     
     private void SetLeftHand() // 아바타의 왼손
     {
-        Vector3 leftUp = pose[16] - pose[14];
-        Vector3 leftForward = Vector3.Cross(pose[20] - pose[16], pose[18] - pose[16]);
-        Debug.Log(right.Count);
-        if (right.Count < 1)
-            return;
-
+        //Vector3 leftUp = pose[16] - pose[14];
+        //Vector3 leftForward = Vector3.Cross(pose[20] - pose[16], pose[18] - pose[16]);
+ 
         Vector3 palmNormal = -Vector3.Cross(right[17] - right[0], right[5] - right[0]);
-        Vector3 fingerUp;
+        //Vector3 fingerUp;
 
         // 진짜 머리아프지만 왼손이 오른손이고 오른쪽이 왼쪽인 그런 상황
         animator.GetBoneTransform(HumanBodyBones.LeftHand).rotation = Quaternion.LookRotation(palmNormal, right[9] - right[0]);
@@ -175,6 +181,8 @@ public class HumanBodyBone : MonoBehaviour
         animator.GetBoneTransform(HumanBodyBones.LeftRingIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, right[15] - right[14]);
         animator.GetBoneTransform(HumanBodyBones.LeftRingDistal).rotation = Quaternion.FromToRotation(Vector3.up, right[16] - right[15]);
 
+        if (right.Count < 21)
+            Debug.Log(right.Count);
         //fingerUp = right[17] - right[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
         animator.GetBoneTransform(HumanBodyBones.LeftLittleProximal).rotation = Quaternion.FromToRotation(Vector3.up, right[18] - right[17]);
         animator.GetBoneTransform(HumanBodyBones.LeftLittleIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, right[19] - right[18]);
@@ -182,40 +190,35 @@ public class HumanBodyBone : MonoBehaviour
     }
     private void SetRightHand()
     {
-
-        Debug.Log(left.Count);
-        if (left.Count < 1)
-            return;
-
         Vector3 palmNormal = Vector3.Cross(left[17] - left[0], left[5] - left[0]);
-        Vector3 fingerUp;
+        //Vector3 fingerUp;
 
         animator.GetBoneTransform(HumanBodyBones.RightHand).rotation = Quaternion.LookRotation(palmNormal, left[9] - left[0]);
 
         // 엄지손가락이 손등으로 접힘
-        fingerUp = left[1] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position; 
-        animator.GetBoneTransform(HumanBodyBones.RightThumbProximal).rotation = Quaternion.FromToRotation(fingerUp, left[2] - left[1]);
-        animator.GetBoneTransform(HumanBodyBones.RightThumbIntermediate).rotation = Quaternion.FromToRotation(fingerUp, left[3] - left[2]);
-        animator.GetBoneTransform(HumanBodyBones.RightThumbDistal).rotation = Quaternion.FromToRotation(fingerUp, left[4] - left[3]);
+        //fingerUp = left[1] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position; 
+        animator.GetBoneTransform(HumanBodyBones.RightThumbProximal).rotation = Quaternion.FromToRotation(Vector3.up, left[2] - left[1]);
+        animator.GetBoneTransform(HumanBodyBones.RightThumbIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, left[3] - left[2]);
+        animator.GetBoneTransform(HumanBodyBones.RightThumbDistal).rotation = Quaternion.FromToRotation(Vector3.up, left[4] - left[3]);
 
-        fingerUp = left[5] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
-        animator.GetBoneTransform(HumanBodyBones.RightIndexProximal).rotation = Quaternion.FromToRotation(fingerUp, left[6] - left[5]);
-        animator.GetBoneTransform(HumanBodyBones.RightIndexIntermediate).rotation = Quaternion.FromToRotation(fingerUp, left[7] - left[6]);
-        animator.GetBoneTransform(HumanBodyBones.RightIndexDistal).rotation = Quaternion.FromToRotation(fingerUp, left[8] - left[7]);
+        //Vector3.up = left[5] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
+        animator.GetBoneTransform(HumanBodyBones.RightIndexProximal).rotation = Quaternion.FromToRotation(Vector3.up, left[6] - left[5]);
+        animator.GetBoneTransform(HumanBodyBones.RightIndexIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, left[7] - left[6]);
+        animator.GetBoneTransform(HumanBodyBones.RightIndexDistal).rotation = Quaternion.FromToRotation(Vector3.up, left[8] - left[7]);
 
-        fingerUp = left[9] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
-        animator.GetBoneTransform(HumanBodyBones.RightMiddleProximal).rotation = Quaternion.FromToRotation(fingerUp, left[10] - left[9]);
-        animator.GetBoneTransform(HumanBodyBones.RightMiddleIntermediate).rotation = Quaternion.FromToRotation(fingerUp, left[11] - left[10]);
-        animator.GetBoneTransform(HumanBodyBones.RightMiddleDistal).rotation = Quaternion.FromToRotation(fingerUp, left[12] - left[11]);
+        //Vector3.up = left[9] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
+        animator.GetBoneTransform(HumanBodyBones.RightMiddleProximal).rotation = Quaternion.FromToRotation(Vector3.up, left[10] - left[9]);
+        animator.GetBoneTransform(HumanBodyBones.RightMiddleIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, left[11] - left[10]);
+        animator.GetBoneTransform(HumanBodyBones.RightMiddleDistal).rotation = Quaternion.FromToRotation(Vector3.up, left[12] - left[11]);
 
-        fingerUp = left[13] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
-        animator.GetBoneTransform(HumanBodyBones.RightRingProximal).rotation = Quaternion.FromToRotation(fingerUp, left[14] - left[13]);
-        animator.GetBoneTransform(HumanBodyBones.RightRingIntermediate).rotation = Quaternion.FromToRotation(fingerUp, left[15] - left[14]);
-        animator.GetBoneTransform(HumanBodyBones.RightRingDistal).rotation = Quaternion.FromToRotation(fingerUp, left[16] - left[15]);
+        //Vector3.up = left[13] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
+        animator.GetBoneTransform(HumanBodyBones.RightRingProximal).rotation = Quaternion.FromToRotation(Vector3.up, left[14] - left[13]);
+        animator.GetBoneTransform(HumanBodyBones.RightRingIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, left[15] - left[14]);
+        animator.GetBoneTransform(HumanBodyBones.RightRingDistal).rotation = Quaternion.FromToRotation(Vector3.up, left[16] - left[15]);
 
-        fingerUp = left[17] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
-        animator.GetBoneTransform(HumanBodyBones.RightLittleProximal).rotation = Quaternion.FromToRotation(fingerUp, left[18] - left[17]);
-        animator.GetBoneTransform(HumanBodyBones.RightLittleIntermediate).rotation = Quaternion.FromToRotation(fingerUp, left[19] - left[18]);
-        animator.GetBoneTransform(HumanBodyBones.RightLittleDistal).rotation = Quaternion.FromToRotation(fingerUp, left[20] - left[19]);
+        //Vector3.up = left[17] - left[0] + animator.GetBoneTransform(HumanBodyBones.LeftHand).position;
+        animator.GetBoneTransform(HumanBodyBones.RightLittleProximal).rotation = Quaternion.FromToRotation(Vector3.up, left[18] - left[17]);
+        animator.GetBoneTransform(HumanBodyBones.RightLittleIntermediate).rotation = Quaternion.FromToRotation(Vector3.up, left[19] - left[18]);
+        animator.GetBoneTransform(HumanBodyBones.RightLittleDistal).rotation = Quaternion.FromToRotation(Vector3.up, left[20] - left[19]);
     }
 }
