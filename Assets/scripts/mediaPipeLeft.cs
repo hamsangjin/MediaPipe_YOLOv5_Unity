@@ -19,12 +19,12 @@ public class mediaPipeLeft : MonoBehaviour
 
     private void LateUpdate()
     {
-        //right = new List<Vector3>(DataReceiver.Instance.getLeft());
-        //right[0] = new Vector3(right[0].x, right[0].y, 0);
-        //for (int i = 0; i < right.Count; i++)
-        //{
-        //    transform.GetChild(i).localPosition = right[i] * 2;
-        //}
+        right = new List<Vector3>(DataReceiver.Instance.getRight(0));
+        right[0] = new Vector3(right[0].x, right[0].y, 0);
+        for (int i = 0; i < right.Count; i++)
+        {
+            transform.GetChild(i).localPosition = right[i] * 2;
+        }
 
     }
 }

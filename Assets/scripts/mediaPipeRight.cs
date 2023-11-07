@@ -19,7 +19,8 @@ public class mediaPipeRight : MonoBehaviour
 
     private void LateUpdate()
     {
-        //left = new List<Vector3>(DataReceiver.Instance.getLeft());
+        //left = new List<Vector3>(DataReceiver.Instance.getLeft(0));
+
         //left[0] = new Vector3(left[0].x, left[0].y, 0);
         //for (int i = 0; i < left.Count; i++)
         //{

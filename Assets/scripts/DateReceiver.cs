@@ -76,11 +76,7 @@ public class DataReceiver : MonoBehaviour
     private void Update()
     {
         Load();
-        // 받은 데이터의 길이가 5보다 작으면 루프 종료
-        if (dataReceived.Length < 5)
-            Debug.Log("Received data is too short. pleaes check data.");
-        else
-            preprocessing();
+        preprocessing();
     }
 
     void OnDestroy()
@@ -91,15 +87,16 @@ public class DataReceiver : MonoBehaviour
 
     private void Load()
     {
-        dataReceived = null;
+        //dataReceived = null;
         bytesRead = stream.Read(buffer, 0, buffer.Length);
         dataReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-        if (dataReceived.Length < 5)
-            Debug.Log("Received data is too short. pleaes check data.");
+        if (dataReceived.Length < 1)
+            Debug.Log("Received data is too short. pleaes check data. (Load)");
 
         //Debug.Log(dataReceived);
-        m_dataList = JsonUtility.FromJson<DataList>(dataReceived);
+        else
+            m_dataList = JsonUtility.FromJson<DataList>(dataReceived);
     }
 
     public void preprocessing()
@@ -112,14 +109,21 @@ public class DataReceiver : MonoBehaviour
             //for (int i = 0; i < item.face.Length; ++i)
             //    item.face[i] = new Vector3(item.face[i].x * 10, -item.face[i].y * 10, -item.face[i].z * resize_z);
 
-            item.left[0].z = 0; // 0번의 실제 z 값이 매우 이상함, -52 처럼 멀리 떨어져있음
-            item.right[0].z = 0;
+            if (item.left.Length > 0)
+            {
+                item.left[0].z = 0; // 0번의 실제 z 값이 매우 이상함, -52 처럼 멀리 떨어져있음
 
-            for (int i = 0; i < item.left.Length; ++i)
-                item.left[i] = new Vector3(item.left[i].x * 10, -item.left[i].y * 10, -item.left[i].z * resize_z);
+                for (int i = 0; i < item.left.Length; ++i)
+                    item.left[i] = new Vector3(item.left[i].x * 10, -item.left[i].y * 10, -item.left[i].z * resize_z);
+            }
 
-            for (int i = 0; i < item.right.Length; ++i)
-                item.right[i] = new Vector3(item.right[i].x * 10, -item.right[i].y * 10, -item.right[i].z * resize_z);
+            if (item.right.Length > 0)
+            {
+                item.right[0].z = 0;
+
+                for (int i = 0; i < item.right.Length; ++i)
+                    item.right[i] = new Vector3(item.right[i].x * 10, -item.right[i].y * 10, -item.right[i].z * resize_z);
+            }
 
         }
     }
