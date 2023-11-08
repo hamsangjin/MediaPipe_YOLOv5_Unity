@@ -15,7 +15,6 @@ public class DataReceiver : MonoBehaviour
     public class Data
     {
         public Vector3[] pose;
-        public Vector3[] face;
         public Vector3[] left;
         public Vector3[] right;
     }

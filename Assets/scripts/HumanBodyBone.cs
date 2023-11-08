@@ -39,7 +39,9 @@ public class HumanBodyBone : MonoBehaviour
     void LateUpdate()
     {
         if (ID >= DataReceiver.Instance.getDataLength())
+        {
             return;
+        }
         pose = new List<Vector3>(DataReceiver.Instance.getPose(ID));
         left = new List<Vector3>(DataReceiver.Instance.getLeft(ID));
         right = new List<Vector3>(DataReceiver.Instance.getRight(ID));
@@ -47,13 +49,15 @@ public class HumanBodyBone : MonoBehaviour
         SetBoneTransform();
     }
 
+    public int GetID() { return ID; }
+
     private void SetBoneTransform()
     {
         if (pose.Count == 33)
         {
             SetShoulder();
             SetArm();
-            setHead();
+            //setHead();
 
             SetHip();
             SetLeg();
