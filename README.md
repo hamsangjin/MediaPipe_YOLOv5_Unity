@@ -1,4 +1,4 @@
-# 다인원 포즈 렌더링 프로그램(MultiPerson Pose Rendering Program)
+![image](https://github.com/hamsangjin/MediaPipe_YOLOv5_Unity/assets/103736614/31c38ff1-3b23-44bf-952d-8df8ce6f2875)# 다인원 포즈 렌더링 프로그램(MultiPerson Pose Rendering Program)
 
 > 2023 BRIGHT MAKERS EXPO 제15회 캡스톤디자인 경진대회 - 대상 </br>
 > 최종 발표 영상 : [YouTube](https://youtu.be/E6Gg7EKbIuw)
@@ -16,7 +16,13 @@
 - [5. 성능 개선](#5.-성능-개선)
 ----
 
-## 1. 프로젝트 설명
+## 1. 프로젝트 정보
+
+### 프로젝트 배경
+- 기존 프로그램 같은 경우 표정과 머리 움직임을 제외하고는 인식이 어렵고 한 명밖에 인식이 안 된다는 단점
+- 프로그램이 아닌 장비를 사용해 머리와 손 움직임 정도만 인식하려 해도 50만원 가량의 가격적인 부담
+
+### 프로젝트 소개
 인공지능 자세 추정 모델 **MediaPipe**와 객체 탐지 모델 **Yolov5**를 통해 두 명 이상의 자세를 추정하고, 추정한 결과를 **Unity**에서 실시간 렌더링할 수 있는 프로그램이다.
 이 프로그램은 고가의 VR 장비 없이 웹캠을 이용해 두 명 이상의 자세 추정이 가능하다.
 
