@@ -96,7 +96,7 @@ if __name__ == '__main__':
     connectionSock, addr = serverSock.accept()
 
     # YOLO Model Setting
-    yolo_model = torch.hub.load('yolov5', 'custom',  'yolov5x6.pt', source='local')
+    yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5x6')
     yolo_model.conf = 0.5
     yolo_model.dynamic = True
     yolo_model.pretrained = True
