@@ -15,7 +15,7 @@ public class HumanBodyBone : MonoBehaviour
     private List<Vector3> pose;
     private List<Vector3> left;
     private List<Vector3> right;
-    private int ID;
+    public int ID;
 
     HumanBodyBone()
     {
@@ -24,8 +24,8 @@ public class HumanBodyBone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ID = avatarID;
-        avatarID++;
+        //ID = avatarID;
+        //avatarID++;
         animator = GetComponent<Animator>();
     }
 
