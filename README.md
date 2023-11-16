@@ -1,4 +1,4 @@
-![image](https://github.com/hamsangjin/MediaPipe_YOLOv5_Unity/assets/103736614/31c38ff1-3b23-44bf-952d-8df8ce6f2875)# 다인원 포즈 렌더링 프로그램(MultiPerson Pose Rendering Program)
+# 다인원 포즈 렌더링 프로그램(MultiPerson Pose Rendering Program)
 
 > 2023 BRIGHT MAKERS EXPO 제15회 캡스톤디자인 경진대회 - 대상 </br>
 > 최종 발표 영상 : [YouTube](https://youtu.be/E6Gg7EKbIuw)
